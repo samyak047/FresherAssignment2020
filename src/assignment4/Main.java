@@ -7,22 +7,21 @@ import java.sql.Statement;
 import java.util.LinkedList;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException{
+    public static void main(String[] args) throws InterruptedException {
         LinkedList<Item> itemList = new LinkedList<Item>();
 
         Operation op;
-        try{
+        try {
             op = new Operation();
             System.out.println("Connected to DB");
-        }
-        catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println(e);
             throw new RuntimeException("SQL Table not fetched.");
         }
 
         Thread t1 = new Thread(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 try {
                     while (true) {
                         synchronized (this) {
@@ -36,9 +35,9 @@ public class Main {
                             System.out.println("Notified");
                         }
                     }
-                }catch (InterruptedException e){
+                } catch (InterruptedException e) {
                     System.out.println(e);
-                }catch (RuntimeException e){
+                } catch (RuntimeException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -51,7 +50,7 @@ public class Main {
                         synchronized (this) {
                             while (itemList.size() == 0) {
 //                              wait();
-                                if(!t1.isAlive()) throw new RuntimeException();
+                                if (!t1.isAlive()) throw new RuntimeException();
                             }
                             Item item = itemList.remove();
                             item.print();
@@ -59,10 +58,9 @@ public class Main {
                             notify();
                         }
                     }
-                }catch (InterruptedException e) {
+                } catch (InterruptedException e) {
                     System.out.println(e);
-                }
-                catch (RuntimeException e) {
+                } catch (RuntimeException e) {
                 }
             }
         });

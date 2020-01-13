@@ -5,8 +5,9 @@ public class Item {
     private float price;
     private int quantity;
     private float tax;
-    public Item(String name, String type, float price, int quantity) throws RuntimeException{
-        if(!"raw".equals(type) && !"manufactured".equals(type) && !"imported".equals(type)) {
+
+    public Item(String name, String type, float price, int quantity) throws RuntimeException {
+        if (!"raw".equals(type) && !"manufactured".equals(type) && !"imported".equals(type)) {
             throw new RuntimeException();
         }
         this.name = name;
@@ -14,6 +15,7 @@ public class Item {
         this.price = price;
         this.quantity = quantity;
     }
+
     private float getTax() {
         if (type.equals("raw")) {
             tax = (price * 12.5f) / 100;
@@ -30,7 +32,8 @@ public class Item {
         }
         return tax;
     }
-    public void print(){
+
+    public void print() {
         System.out.println("Name of Item : " + name);
         System.out.println("Type of Item : " + type);
         System.out.println("Quantity : " + quantity);

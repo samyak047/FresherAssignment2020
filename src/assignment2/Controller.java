@@ -1,15 +1,18 @@
 package assignment2;
+
 import java.util.*;
 
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
-public class Controller{
+
+public class Controller {
     Set<User> users;
     DiskHandler diskHandler = new DiskHandler();
     boolean isUpdated = false;
     Scanner sc = new Scanner(System.in);
-    public void choice(Integer choice){
-        switch(choice){
+
+    public void choice(Integer choice) {
+        switch (choice) {
             case 1:
                 UserCreator us = new UserCreator();
                 User newUser = us.create();
@@ -17,26 +20,26 @@ public class Controller{
                 isUpdated = true;
                 break;
             case 2:
-                if(users.size()==0)
+                if (users.size() == 0)
                     System.out.println("No records to display.");
-                else{
+                else {
                     System.out.println("Please select a field on which you want to sort :");
                     System.out.println("1. Name");
                     System.out.println("2. Roll No.");
                     System.out.println("3. Age");
                     System.out.println("4. Address");
                     int op1, op2;
-                    while(true){
+                    while (true) {
                         op1 = Integer.parseInt(sc.nextLine());
-                        if(op1 < 1 || op1 > 4)
+                        if (op1 < 1 || op1 > 4)
                             System.out.println("Please select valid option[1-4].");
-                        else{
+                        else {
                             System.out.println("Please select sorting method:");
                             System.out.println("1. Ascending");
                             System.out.println("2. Descending");
-                            while(true){
+                            while (true) {
                                 op2 = Integer.parseInt(sc.nextLine());
-                                if(op2 < 1 || op2 > 2)
+                                if (op2 < 1 || op2 > 2)
                                     System.out.println("Please select valid option[1,2].");
                                 else
                                     break;
@@ -75,8 +78,8 @@ public class Controller{
                 System.out.println("Enter roll number to delete record:");
                 int roll = Integer.parseInt(sc.nextLine());
                 int len = users.size();
-                for(User user : users)
-                    if(user.rollNumber == roll){
+                for (User user : users)
+                    if (user.rollNumber == roll) {
                         System.out.println("The following record is deleting...\n\n");
                         System.out.println("------------------------------------------------------------------------------------------");
                         System.out.println("Name\t\tRoll No\t\tAge\t Address\t\tCourses");
@@ -86,11 +89,11 @@ public class Controller{
                         System.out.println("User deleted successfully.");
                         isUpdated = true;
                     }
-                if(len == users.size())
+                if (len == users.size())
                     System.out.printf("No record found for this roll number.\n");
                 break;
             case 4:
-                if(users.size()==0)
+                if (users.size() == 0)
                     System.out.println("No users to save.");
                 else
                     diskHandler.saveToDisk(users);
@@ -99,9 +102,9 @@ public class Controller{
         }
     }
 
-    public void start(){
+    public void start() {
         users = diskHandler.getFromDisk();
-        while(true){
+        while (true) {
             Scanner sc = new Scanner(System.in);
             System.out.println("Select option :");
             System.out.println("1. Add User Details");
@@ -110,22 +113,20 @@ public class Controller{
             System.out.println("4. Save User Details");
             System.out.println("5. Exit");
             String choice = sc.nextLine();
-            try{
+            try {
                 Integer option = Integer.parseInt(choice);
-                if(option < 1 || option >5){
+                if (option < 1 || option > 5) {
                     throw new NumberFormatException();
                 }
-                if(option == 5){
-                    if(isUpdated){
+                if (option == 5) {
+                    if (isUpdated) {
                         System.out.println("Do you want to save changes?[y/n]");
-                        while(true){
+                        while (true) {
                             String opt = sc.nextLine();
-                            if (opt.equals("y")){
+                            if (opt.equals("y")) {
                                 diskHandler.saveToDisk(users);
                                 break;
-                            }
-                            else
-                            if(opt.equals("n"))
+                            } else if (opt.equals("n"))
                                 break;
                             else
                                 System.out.println("Please enter valid input  [y/n]");
@@ -134,8 +135,7 @@ public class Controller{
                     break;
                 }
                 choice(option);
-            }
-            catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Please povide valid input.");
             }
         }

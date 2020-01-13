@@ -1,4 +1,5 @@
 package assignment2;
+
 import java.io.*;
 import java.util.*;
 
@@ -15,6 +16,7 @@ public class DiskHandler {
             e.printStackTrace();
         }
     }
+
     public Set<User> getFromDisk() {
         Set<User> users = new TreeSet<>();
         try {
