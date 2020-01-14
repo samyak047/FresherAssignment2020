@@ -1,4 +1,6 @@
 package assignment4;
+import assignment1.Item.*;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -4,16 +4,14 @@ import java.util.*;
 import java.io.Serializable;
 
 public class UserCreator {
-    public User create() {
+    public static User create() {
         Scanner sc = new Scanner(System.in);
-
 
         System.out.println("Enter new user details");
         System.out.print("Enter Name : ");
         String name = sc.nextLine();
         System.out.print("Enter Age : ");
         int age, roll;
-
         age = Integer.parseInt(sc.nextLine());
         if (age <= 0) throw new RuntimeException("Age must be a valid positive integer");
 

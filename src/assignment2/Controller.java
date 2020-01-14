@@ -6,16 +6,14 @@ import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
 public class Controller {
-    Set<User> users;
-    DiskHandler diskHandler = new DiskHandler();
-    boolean isUpdated = false;
-    Scanner sc = new Scanner(System.in);
+    static Set<User> users;
+    static boolean isUpdated = false;
 
-    public void choice(Integer choice) {
+    private static void choice(Integer choice) {
+        Scanner sc = new Scanner(System.in);
         switch (choice) {
             case 1:
-                UserCreator us = new UserCreator();
-                User newUser = us.create();
+                User newUser = UserCreator.create();
                 users.add(newUser);
                 isUpdated = true;
                 break;
@@ -71,7 +69,7 @@ public class Controller {
                         if (opt2 == 2) result = -result;
                         return result;
                     });
-                    sortedUsers.forEach(x -> x.print());
+                    sortedUsers.forEach(User::print);
                     break;
                 }
             case 3:
@@ -90,20 +88,20 @@ public class Controller {
                         isUpdated = true;
                     }
                 if (len == users.size())
-                    System.out.printf("No record found for this roll number.\n");
+                    System.out.print("No record found for this roll number.");
                 break;
             case 4:
                 if (users.size() == 0)
                     System.out.println("No users to save.");
                 else
-                    diskHandler.saveToDisk(users);
+                    DiskHandler.saveToDisk(users);
                 isUpdated = false;
                 break;
         }
     }
 
-    public void start() {
-        users = diskHandler.getFromDisk();
+    public static void start() {
+        users = DiskHandler.getFromDisk();
         while (true) {
             Scanner sc = new Scanner(System.in);
             System.out.println("Select option :");
@@ -114,7 +112,7 @@ public class Controller {
             System.out.println("5. Exit");
             String choice = sc.nextLine();
             try {
-                Integer option = Integer.parseInt(choice);
+                int option = Integer.parseInt(choice);
                 if (option < 1 || option > 5) {
                     throw new NumberFormatException();
                 }
@@ -123,20 +121,22 @@ public class Controller {
                         System.out.println("Do you want to save changes?[y/n]");
                         while (true) {
                             String opt = sc.nextLine();
-                            if (opt.equals("y")) {
-                                diskHandler.saveToDisk(users);
-                                break;
-                            } else if (opt.equals("n"))
-                                break;
-                            else
-                                System.out.println("Please enter valid input  [y/n]");
+                            switch (opt){
+                                case "y" :
+                                    DiskHandler.saveToDisk(users);
+                                    return;
+                                case "n" :
+                                    return;
+                                default:
+                                    System.out.println("Please enter valid input  [y/n]");
+                            }
                         }
                     }
                     break;
                 }
                 choice(option);
             } catch (NumberFormatException e) {
-                System.out.println("Please povide valid input.");
+                System.out.println("Please provide valid input.");
             }
         }
     }

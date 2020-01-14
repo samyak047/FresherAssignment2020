@@ -24,27 +24,26 @@ public class Controller {
                 String quantityText = sc.nextLine();
 
 
-                if (name.equals("")) {
+                if (name.isEmpty()) {
                     throw new RuntimeException("Name is required.");
                 }
-                if (!("raw".equalsIgnoreCase(type) || "manufactured".equalsIgnoreCase(type) || "imported".equalsIgnoreCase(type))) {
-                    throw new RuntimeException("Type shoud be either raw, manufactured or imported.");
+                switch (type){
+                    case "raw" : break;
+                    case "manufactured" : break;
+                    case "imported" : break;
+                    default: throw new RuntimeException("Type shoud be either raw, manufactured or imported.");
                 }
                 Item item;
                 item = ItemCreator.getItem(name, type);
-                if(!"".equals(priceText)){
+                if(!priceText.isBlank()){
                     item.setPrice(Float.parseFloat(priceText));
                 }
-                if(!"".equals(quantityText)){
+                if(!quantityText.isBlank()){
                     item.setQuantity(Integer.parseInt(quantityText));
                 }
 
                 item.print();
                 System.out.println("Do you want to enter details of any other item? (y/n):");
-                choice = sc.nextLine();
-            } catch (NumberFormatException e){
-                System.out.println(e);
-                System.out.println("Do you want to try again? (y/n):");
                 choice = sc.nextLine();
             } catch (RuntimeException e){
                 System.out.println(e);

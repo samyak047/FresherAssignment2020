@@ -1,10 +1,7 @@
 package assignment3;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.TreeSet;
-import java.util.Iterator;
-import java.util.Scanner;
 
 
 public class Node implements Comparable<Node> {

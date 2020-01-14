@@ -1,4 +1,5 @@
 package assignment4;
+import assignment1.Item.*;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -24,7 +25,7 @@ public class Operation {
     public Item getNextItemFromDB() throws RuntimeException {
         try {
             if (rs.next()) {
-                Item item = new Item(rs.getString(2), rs.getString(5), rs.getFloat(4), rs.getInt(3));
+                Item item = ItemCreator.getItem(rs.getString(2), rs.getString(5));
                 return item;
             } else {
                 con.close();
